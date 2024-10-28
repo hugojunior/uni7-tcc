@@ -2,13 +2,17 @@
 
 # Atualizando o sistema e instalando pacotes necessários
 yum update -y
-yum install -y httpd
-amazon-linux-extras install -y epel
-yum install -y jq
+yum install -y httpd mysql php
 
 # Iniciando e habilitando o Apache
 systemctl enable httpd
 systemctl start httpd
+
+# Definindo variáveis de conexão ao MySQL
+DB_HOST="ENDERECO_DO_RDS"
+DB_USER="USUARIO"
+DB_PASS="SENHA"
+DB_NAME="NOME_DO_BANCO"
 
 # Obtendo o token de acesso para a API de metadados da instância
 TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
@@ -17,8 +21,8 @@ TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-m
 INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
 AVAILABILITY_ZONE=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
 
-# Criando a página HTML simples da nossa aplicação
-cat > /var/www/html/index.html <<EOF
+# Criando a página da nossa aplicação
+cat > /var/www/html/index.php <<EOF
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -36,23 +40,54 @@ cat > /var/www/html/index.html <<EOF
         <p class="lead">Arquiteturas Resilientes para Aplicações Escaláveis na AWS.</p>
         <hr>
         <div class="card">
-          <h5 class="card-header">Informações da Instância EC2</h5>
+          <h5 class="card-header">Dados da Instância EC2</h5>
           <div class="card-body">
             <p><strong>ID:</strong> <span class="text-primary">${INSTANCE_ID}</span></p>
             <p><strong>Zona de disponibilidade:</strong> <span class="text-primary">${AVAILABILITY_ZONE}</span></p>
           </div>
         </div>
         <div class="card mt-3">
-          <h5 class="card-header">Conteúdo a ser carregado</h5>
-          <div class="card-body">
-            <p>
-              <img src="mac-computer-on-desk.jpg" width="150" class="rounded mt-1">
-              <img src="man-watches-laptop.jpg" width="150" class="rounded mt-1">
-              <img src="woman-works-on-bright-computer-screens.jpg" width="150" class="rounded mt-1">
-              <img src="man-at-computer-using-trackpad.jpg" width="150" class="rounded mt-1">
-            </p>
-            <ul class="list-unstyled ">
-              <li><small>As imagens acima estão armazenadas no mesmo diretório da aplicação com o objetivo de sobrecarregar a instância durante os testes de desempenho.</small></li>
+          <h5 class="card-header">Dados do RDS (MySQL)</h5>
+          <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">E-mail</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Nascimento</th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php
+                // Conexão ao banco de dados
+                \$conn = new mysqli('$DB_HOST', '$DB_USER', '$DB_PASS', '$DB_NAME');
+                if (\$conn->connect_error) {
+                    die("Falha na conexão com o banco de dados: " . \$conn->connect_error);
+                }
+                
+                // Consultando dados da tabela 'peoples'
+                \$sql = "SELECT name, email, phone, birth_date, image FROM peoples";
+                \$result = \$conn->query(\$sql);
+
+                if (\$result->num_rows > 0) {
+                    while(\$row = \$result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td><img src='" . \$row['image'] . "' alt='Foto de " . \$row['name'] . "' height='50' class='rounded'></td>";
+                        echo "<td>" . \$row['name'] . "</td>";
+                        echo "<td>" . \$row['email'] . "</td>";
+                        echo "<td>" . \$row['phone'] . "</td>";
+                        echo "<td>" . date("d/m/Y", strtotime(\$row['birth_date'])) . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                \$conn->close();
+              ?>
+              </tbody>
+            </table>
+            <ul class="list-unstyled px-3">
+              <li><small>As imagens foram propositalmente adicionadas em alta resolução, com o objetivo de tornar a página mais pesada para os testes de desempenho.</small></li>
               <li><small>As imagens foram obtidas no <a href="https://www.shopify.com/stock-photos" target="_blank">Shopify Stock Photos</a>, um banco de imagens gratuitas.</small></li>
             </ul>
           </div>
@@ -69,14 +104,16 @@ cat > /var/www/html/index.html <<EOF
 EOF
 
 # Baixando 4 imagens do GitHub e salvando no mesmo diretório do index.html
-curl -o /var/www/html/mac-computer-on-desk.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/mac-computer-on-desk.jpg
-curl -o /var/www/html/man-at-computer-using-trackpad.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/man-at-computer-using-trackpad.jpg
-curl -o /var/www/html/man-watches-laptop.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/man-watches-laptop.jpg
-curl -o /var/www/html/woman-works-on-bright-computer-screens.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/woman-works-on-bright-computer-screens.jpg
+curl -o /var/www/html/images/smiling-man-in-blue.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/smiling-man-in-blue.jpg
+curl -o /var/www/html/images/stylish-woman-wearing-sunglasses.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/stylish-woman-wearing-sunglasses.jpg
+curl -o /var/www/html/images/the-man-in-the-hat.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/the-man-in-the-hat.jpg
+curl -o /var/www/html/images/woman-in-office.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/woman-in-office.jpg
+curl -o /var/www/html/images/woman-talking-during-meeting.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/woman-talking-during-meeting.jpg
 
 # Alterando permissões dos arquivos
-chmod 644 /var/www/html/index.html
-chmod 644 /var/www/html/mac-computer-on-desk.jpg
-chmod 644 /var/www/html/man-at-computer-using-trackpad.jpg
-chmod 644 /var/www/html/man-watches-laptop.jpg
-chmod 644 var/www/html/woman-works-on-bright-computer-screens.jpg
+chmod 644 /var/www/html/index.php
+chmod 644 /var/www/html/images/smiling-man-in-blue.jpg
+chmod 644 /var/www/html/images/stylish-woman-wearing-sunglasses.jpg
+chmod 644 /var/www/html/images/the-man-in-the-hat.jpg
+chmod 644 /var/www/html/images/woman-in-office.jpg
+chmod 644 /var/www/html/images/woman-talking-during-meeting.jpg

@@ -15,23 +15,65 @@
         <p class="lead">Arquiteturas Resilientes para Aplicações Escaláveis na AWS.</p>
         <hr>
         <div class="card">
-          <h5 class="card-header">Informações da Instância EC2</h5>
+          <h5 class="card-header">Dados da Instância EC2</h5>
           <div class="card-body">
             <p><strong>ID:</strong> <span class="text-primary">${INSTANCE_ID}</span></p>
             <p><strong>Zona de disponibilidade:</strong> <span class="text-primary">${AVAILABILITY_ZONE}</span></p>
           </div>
         </div>
         <div class="card mt-3">
-          <h5 class="card-header">Conteúdo a ser carregado</h5>
-          <div class="card-body">
-            <p>
-              <img src="mac-computer-on-desk.jpg" width="150" class="rounded mt-1">
-              <img src="man-watches-laptop.jpg" width="150" class="rounded mt-1">
-              <img src="woman-works-on-bright-computer-screens.jpg" width="150" class="rounded mt-1">
-              <img src="man-at-computer-using-trackpad.jpg" width="150" class="rounded mt-1">
-            </p>
-            <ul class="list-unstyled ">
-              <li><small>As imagens acima estão armazenadas no mesmo diretório da aplicação com o objetivo de sobrecarregar a instância durante os testes de desempenho.</small></li>
+          <h5 class="card-header">Dados do RDS (MySQL)</h5>
+          <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">E-mail</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Nascimento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="images/stylish-woman-wearing-sunglasses.jpg" alt="Foto de Ana Souza" height="50" class="rounded"></td>
+                  <td>Ana Souza</td>
+                  <td>ana.souza@example.com</td>
+                  <td>(85) 98765-4321</td>
+                  <td>12/03/1990</td>
+                </tr>
+                <tr>
+                  <td><img src="images/smiling-man-in-blue.jpg" alt="Foto de Bruno Lima" height="50" class="rounded"></td>
+                  <td>Bruno Lima</td>
+                  <td>bruno.lima@example.com</td>
+                  <td>(11) 99887-6543</td>
+                  <td>15/07/1985</td>
+                </tr>
+                <tr>
+                  <td><img src="images/woman-in-office.jpg" alt="Foto de Carla Oliveira" height="50" class="rounded"></td>
+                  <td>Carla Oliveira</td>
+                  <td>carla.oliveira@example.com</td>
+                  <td>(21) 91234-5678</td>
+                  <td>23/11/1995</td>
+                </tr>
+                <tr>
+                  <td><img src="images/the-man-in-the-hat.jpg" alt="Foto de Daniel Ferreira" height="50" class="rounded"></td>
+                  <td>Daniel Ferreira</td>
+                  <td>daniel.ferreira@example.com</td>
+                  <td>(31) 97654-3210</td>
+                  <td>02/05/1988</td>
+                </tr>
+                <tr>
+                  <td><img src="images/woman-talking-during-meeting.jpg" alt="Foto de Fernanda Melo" height="50" class="rounded"></td>
+                  <td>Fernanda Melo</td>
+                  <td>fernanda.melo@example.com</td>
+                  <td>(61) 98123-4567</td>
+                  <td>19/09/1992</td>
+                </tr>
+              </tbody>
+            </table>
+            <ul class="list-unstyled px-3">
+              <li><small>As imagens foram propositalmente adicionadas em alta resolução, com o objetivo de tornar a página mais pesada para os testes de desempenho.</small></li>
               <li><small>As imagens foram obtidas no <a href="https://www.shopify.com/stock-photos" target="_blank">Shopify Stock Photos</a>, um banco de imagens gratuitas.</small></li>
             </ul>
           </div>
