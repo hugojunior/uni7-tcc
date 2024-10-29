@@ -2,17 +2,19 @@
 
 # Atualizando o sistema e instalando pacotes necessários
 yum update -y
-yum install -y httpd mysql php
+amazon-linux-extras install -y epel php8.1 mariadb10.5
+yum install -y httpd
 
 # Iniciando e habilitando o Apache
 systemctl enable httpd
 systemctl start httpd
 
 # Definindo variáveis de conexão ao MySQL
-DB_HOST="ENDERECO_DO_RDS"
-DB_USER="USUARIO"
-DB_PASS="SENHA"
-DB_NAME="NOME_DO_BANCO"
+DB_HOST="<rds-endpoint>"
+DB_PORT="3306"
+DB_USER="tccuser"
+DB_PASS="tccpassword"
+DB_NAME="tccdatabase"
 
 # Obtendo o token de acesso para a API de metadados da instância
 TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
@@ -62,7 +64,7 @@ cat > /var/www/html/index.php <<EOF
               <tbody>
               <?php
                 // Conexão ao banco de dados
-                \$conn = new mysqli('$DB_HOST', '$DB_USER', '$DB_PASS', '$DB_NAME');
+                \$conn = new mysqli('$DB_HOST', '$DB_USER', '$DB_PASS', '$DB_NAME', '$DB_PORT');
                 if (\$conn->connect_error) {
                     die("Falha na conexão com o banco de dados: " . \$conn->connect_error);
                 }
@@ -103,7 +105,10 @@ cat > /var/www/html/index.php <<EOF
 </html>
 EOF
 
-# Baixando 4 imagens do GitHub e salvando no mesmo diretório do index.html
+# Criando o diretório de imagens
+mkdir -p /var/www/html/images
+
+# Baixando imagens do GitHub e salvando no diretório de imagens
 curl -o /var/www/html/images/smiling-man-in-blue.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/smiling-man-in-blue.jpg
 curl -o /var/www/html/images/stylish-woman-wearing-sunglasses.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/stylish-woman-wearing-sunglasses.jpg
 curl -o /var/www/html/images/the-man-in-the-hat.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/the-man-in-the-hat.jpg
