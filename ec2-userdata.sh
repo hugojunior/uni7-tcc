@@ -30,16 +30,16 @@ cat > /var/www/html/index.php <<EOF
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Arquiteturas Resilientes para Aplicações Escaláveis na AWS">
+    <meta name="description" content="Arquitetura AWS Resiliente e Escalável: Implementação e Avaliação de um Cenário Real">
     <meta name="author" content="Hugo Júnior">
-    <title>Arquiteturas Resilientes para Aplicações Escaláveis na AWS</title>
+    <title>Arquitetura AWS Resiliente e Escalável: Implementação e Avaliação de um Cenário Real</title>
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   </head>
   <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
       <div class="container">
         <h1 class="mt-5">UNI7 - Trabalho de Conclusão de Curso</h1>
-        <p class="lead">Arquiteturas Resilientes para Aplicações Escaláveis na AWS.</p>
+        <p class="lead"><strong>Arquitetura AWS Resiliente e Escalável:</strong> Implementação e Avaliação de um Cenário Real.</p>
         <hr>
         <div class="card">
           <h5 class="card-header">Dados da Instância EC2</h5>
