@@ -8,23 +8,22 @@
     <title>Arquitetura AWS Resiliente e Escalável: Implementação e Avaliação de um Cenário Real</title>
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   </head>
-  <body class="d-flex flex-column h-100">
+  <body class="d-flex flex-column h-100" style="background-color:#f0f0f0">
     <main class="flex-shrink-0">
       <div class="container">
         <h1 class="mt-5">UNI7 - Trabalho de Conclusão de Curso</h1>
-        <p class="lead"><strong>Arquitetura AWS Resiliente e Escalável:</strong> Implementação e Avaliação de um Cenário Real.</p>
-        <hr>
+        <p class="lead text-primary pb-4"><strong>Arquitetura AWS Resiliente e Escalável:</strong> Implementação e Avaliação de um Cenário Real.</p>
         <div class="card">
-          <h5 class="card-header">Dados da Instância EC2</h5>
+          <h5 class="card-header">Dados da Instância em execução (EC2)</h5>
           <div class="card-body">
-            <p><strong>ID:</strong> <span class="text-primary">${INSTANCE_ID}</span></p>
-            <p><strong>Zona de disponibilidade:</strong> <span class="text-primary">${AVAILABILITY_ZONE}</span></p>
+            <p>Identificador: <span class="text-primary h5">${INSTANCE_ID}</span></p>
+            <p>Zona de disponibilidade: <span class="text-primary h5">${AVAILABILITY_ZONE}</span></p>
           </div>
         </div>
         <div class="card mt-3">
-          <h5 class="card-header">Dados do RDS (MySQL)</h5>
+          <h5 class="card-header">Dados do Banco de Dados (RDS)</h5>
           <div class="card-body p-0">
-            <table class="table table-striped">
+            <table class="table table-striped align-middle m-0">
               <thead>
                 <tr>
                   <th scope="col"></th>
@@ -36,35 +35,35 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><img src="images/stylish-woman-wearing-sunglasses.jpg" alt="Foto de Ana Souza" height="50" class="rounded"></td>
+                  <td><img src="images/ana-souza.png" alt="Foto de Ana Souza" height="40"></td>
                   <td>Ana Souza</td>
                   <td>ana.souza@example.com</td>
                   <td>(85) 98765-4321</td>
                   <td>12/03/1990</td>
                 </tr>
                 <tr>
-                  <td><img src="images/smiling-man-in-blue.jpg" alt="Foto de Bruno Lima" height="50" class="rounded"></td>
+                  <td><img src="images/bruno-lima.png" alt="Foto de Bruno Lima" height="40"></td>
                   <td>Bruno Lima</td>
                   <td>bruno.lima@example.com</td>
                   <td>(11) 99887-6543</td>
                   <td>15/07/1985</td>
                 </tr>
                 <tr>
-                  <td><img src="images/woman-in-office.jpg" alt="Foto de Carla Oliveira" height="50" class="rounded"></td>
+                  <td><img src="images/carla-oliveira.png" alt="Foto de Carla Oliveira" height="40"></td>
                   <td>Carla Oliveira</td>
                   <td>carla.oliveira@example.com</td>
                   <td>(21) 91234-5678</td>
                   <td>23/11/1995</td>
                 </tr>
                 <tr>
-                  <td><img src="images/the-man-in-the-hat.jpg" alt="Foto de Daniel Ferreira" height="50" class="rounded"></td>
+                  <td><img src="images/daniel-ferreira.png" alt="Foto de Daniel Ferreira" height="40"></td>
                   <td>Daniel Ferreira</td>
                   <td>daniel.ferreira@example.com</td>
                   <td>(31) 97654-3210</td>
                   <td>02/05/1988</td>
                 </tr>
                 <tr>
-                  <td><img src="images/woman-talking-during-meeting.jpg" alt="Foto de Fernanda Melo" height="50" class="rounded"></td>
+                  <td><img src="images/fernanda-melo.png" alt="Foto de Fernanda Melo" height="40"></td>
                   <td>Fernanda Melo</td>
                   <td>fernanda.melo@example.com</td>
                   <td>(61) 98123-4567</td>
@@ -72,10 +71,6 @@
                 </tr>
               </tbody>
             </table>
-            <ul class="list-unstyled px-3">
-              <li><small>As imagens foram propositalmente adicionadas em alta resolução, com o objetivo de tornar a página mais pesada para os testes de desempenho.</small></li>
-              <li><small>As imagens foram obtidas no <a href="https://www.shopify.com/stock-photos" target="_blank">Shopify Stock Photos</a>, um banco de imagens gratuitas.</small></li>
-            </ul>
           </div>
         </div>
       </div>

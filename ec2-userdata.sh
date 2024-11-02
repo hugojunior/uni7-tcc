@@ -35,23 +35,22 @@ cat > /var/www/html/index.php <<EOF
     <title>Arquitetura AWS Resiliente e Escalável: Implementação e Avaliação de um Cenário Real</title>
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   </head>
-  <body class="d-flex flex-column h-100">
+  <body class="d-flex flex-column h-100" style="background-color:#f0f0f0">
     <main class="flex-shrink-0">
       <div class="container">
         <h1 class="mt-5">UNI7 - Trabalho de Conclusão de Curso</h1>
-        <p class="lead"><strong>Arquitetura AWS Resiliente e Escalável:</strong> Implementação e Avaliação de um Cenário Real.</p>
-        <hr>
+        <p class="lead text-primary pb-4"><strong>Arquitetura AWS Resiliente e Escalável:</strong> Implementação e Avaliação de um Cenário Real.</p>
         <div class="card">
-          <h5 class="card-header">Dados da Instância EC2</h5>
+          <h5 class="card-header">Dados da Instância em execução (EC2)</h5>
           <div class="card-body">
-            <p><strong>ID:</strong> <span class="text-primary">${INSTANCE_ID}</span></p>
-            <p><strong>Zona de disponibilidade:</strong> <span class="text-primary">${AVAILABILITY_ZONE}</span></p>
+            <p>Identificador: <span class="text-primary h5">${INSTANCE_ID}</span></p>
+            <p>Zona de disponibilidade: <span class="text-primary h5">${AVAILABILITY_ZONE}</span></p>
           </div>
         </div>
         <div class="card mt-3">
-          <h5 class="card-header">Dados do RDS (MySQL)</h5>
+          <h5 class="card-header">Dados do Banco de Dados (RDS)</h5>
           <div class="card-body p-0">
-            <table class="table table-striped">
+            <table class="table table-striped align-middle m-0">
               <thead>
                 <tr>
                   <th scope="col"></th>
@@ -76,7 +75,7 @@ cat > /var/www/html/index.php <<EOF
                 if (\$result->num_rows > 0) {
                     while(\$row = \$result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td><img src='" . \$row['image'] . "' alt='Foto de " . \$row['name'] . "' height='50' class='rounded'></td>";
+                        echo "<td><img src='" . \$row['image'] . "' alt='Foto de " . \$row['name'] . "' height='40'></td>";
                         echo "<td>" . \$row['name'] . "</td>";
                         echo "<td>" . \$row['email'] . "</td>";
                         echo "<td>" . \$row['phone'] . "</td>";
@@ -85,13 +84,19 @@ cat > /var/www/html/index.php <<EOF
                     }
                 }
                 \$conn->close();
+                
+                // Função de cálculo pesado para simular uso de CPU
+                function heavyCalculation(\$n) {
+                    \$result = 0;
+                    for (\$i = 0; \$i < \$n; \$i++) {
+                        \$result += sqrt(\$i) * log(\$i + 1);
+                    }
+                    return \$result;
+                }
+                heavyCalculation(100000);
               ?>
               </tbody>
             </table>
-            <ul class="list-unstyled px-3">
-              <li><small>As imagens foram propositalmente adicionadas em alta resolução, com o objetivo de tornar a página mais pesada para os testes de desempenho.</small></li>
-              <li><small>As imagens foram obtidas no <a href="https://www.shopify.com/stock-photos" target="_blank">Shopify Stock Photos</a>, um banco de imagens gratuitas.</small></li>
-            </ul>
           </div>
         </div>
       </div>
@@ -109,16 +114,16 @@ EOF
 mkdir -p /var/www/html/images
 
 # Baixando imagens do GitHub e salvando no diretório de imagens
-curl -o /var/www/html/images/smiling-man-in-blue.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/smiling-man-in-blue.jpg
-curl -o /var/www/html/images/stylish-woman-wearing-sunglasses.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/stylish-woman-wearing-sunglasses.jpg
-curl -o /var/www/html/images/the-man-in-the-hat.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/the-man-in-the-hat.jpg
-curl -o /var/www/html/images/woman-in-office.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/woman-in-office.jpg
-curl -o /var/www/html/images/woman-talking-during-meeting.jpg https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/woman-talking-during-meeting.jpg
+curl -o /var/www/html/images/ana-souza.png https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/ana-souza.png
+curl -o /var/www/html/images/bruno-lima.png https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/bruno-lima.png
+curl -o /var/www/html/images/carla-oliveira.png https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/carla-oliveira.png
+curl -o /var/www/html/images/daniel-ferreira.png https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/daniel-ferreira.png
+curl -o /var/www/html/images/fernanda-melo.png https://raw.githubusercontent.com/hugojunior/uni7-tcc/refs/heads/main/app/images/fernanda-melo.png
 
 # Alterando permissões dos arquivos
 chmod 644 /var/www/html/index.php
-chmod 644 /var/www/html/images/smiling-man-in-blue.jpg
-chmod 644 /var/www/html/images/stylish-woman-wearing-sunglasses.jpg
-chmod 644 /var/www/html/images/the-man-in-the-hat.jpg
-chmod 644 /var/www/html/images/woman-in-office.jpg
-chmod 644 /var/www/html/images/woman-talking-during-meeting.jpg
+chmod 644 /var/www/html/images/ana-souza.png
+chmod 644 /var/www/html/images/bruno-lima.png
+chmod 644 /var/www/html/images/carla-oliveira.png
+chmod 644 /var/www/html/images/daniel-ferreira.png
+chmod 644 /var/www/html/images/fernanda-melo.png
