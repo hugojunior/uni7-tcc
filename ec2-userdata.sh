@@ -68,8 +68,8 @@ cat > /var/www/html/index.php <<EOF
                     die("Falha na conexão com o banco de dados: " . \$conn->connect_error);
                 }
                 
-                // Consultando dados da tabela 'peoples'
-                \$sql = "SELECT name, email, phone, birth_date, image FROM peoples";
+                // Consultando dados da tabela 'users'
+                \$sql = "SELECT name, email, phone, birth_date, image FROM users";
                 \$result = \$conn->query(\$sql);
 
                 if (\$result->num_rows > 0) {

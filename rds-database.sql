@@ -2,7 +2,7 @@ CREATE DATABASE tccdatabase;
 
 USE tccdatabase;
 
-CREATE TABLE peoples (
+CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
   email VARCHAR(100),
@@ -11,7 +11,7 @@ CREATE TABLE peoples (
   image VARCHAR(255)
 );
 
-INSERT INTO peoples (name, email, phone, birth_date, image) VALUES
+INSERT INTO users (name, email, phone, birth_date, image) VALUES
 ('Ana Souza', 'ana.souza@example.com', '(85) 98765-4321', '1990-03-12', 'images/ana-souza.png'),
 ('Bruno Lima', 'bruno.lima@example.com', '(11) 99887-6543', '1985-07-15', 'images/bruno-lima.png'),
 ('Carla Oliveira', 'carla.oliveira@example.com', '(21) 91234-5678', '1995-11-23', 'images/carla-oliveira.png'),
